@@ -1,13 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
+{% include "filter/filter.html" %}
 <div class="container flex flex-col">
 {% for course in courses %}
-    <div class="flex flex-row mx-2 my-5 border-2 bg-gray-300">
+    <a href="{% url 'course:course_detail' course.course_id %}">
+    <div class="flex flex-row mx-2 my-3 border-2 bg-gray-300">
         <div class="container  overflow-hidden">
-            <div class="container w-max-full h-full my-2 mx-3 bg-cover overflow-hidden" style="background-image:url({{course.image_url }})"></div>
+            <div class="container w-max-full h-full my-1 mx-auto rounded-md bg-cover overflow-hidden" style="background-image:url({{course.image_url }})"></div>
         </div>
-        <div class="container font-light text-sm w-max-full px-2 py-10 mx-5 my-5  rounded-md">
-            <h5 class="text-md font-semibold "> Course Name : {{course.course_name}}</h5>
+        <div class="container font-light text-xs w-max-full px-2 py-10 mx-5 my-5  rounded-md">
+            <h5 class="text-base font-semibold "> Course Name : {{course.course_name}}</h5>
             <h5> Course Description : {{course.course_description}}</h5>
             <h5> Course Rating :{{course.course_rating}}</h5>
             <h5> Course Language : {{course.course_language}}</h5>
@@ -15,8 +17,10 @@
             <h5> Course StartDate : {{course.course_start_date}}</h5>
             <h5> Course Subject : {{course.course_subject}}</h5>
             <h5> Course Topic : {{course.course_topic}}</h5>
+            <h5> Course Url : {{course.course_url}}</h5>
         </div>
     </div>
+    </a>
 {% endfor %}
 </div>
 {% endblock content %}

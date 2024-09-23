@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container flex flex-row justify-between mb-4"> 
+    <div class="w-1/2 flex-row items-start border-black"> 
+        <div class="relative w-full h-0  border-2" style="padding-bottom: 56.25%;"> 
+            <iframe 
+                class="absolute top-0 left-0 w-full h-full" 
+                src=""
+                title="YouTube video player" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+            </iframe>
+        </div>
+        <div class="container mt-4 w-full">
+            <div class="w-full border-2 border-gray-500 p-2"> 
+                <textarea class="w-full h-32 p-2 border-2 border-gray-300 rounded" placeholder="Type your notes here..."></textarea> 
+            </div>
+        </div>
+    </div>
+
+    <div class="w-1/4 flex flex-col items-end"> 
+        {% for video in videos %}
+            <div class="mb-4 w-full text-right cursor-pointer border-2"> <!-- Full width, right-aligned text, clickable -->
+                <h2 class="text-blue-500 hover:underline">{{ video.video_title }}</h2> <!-- Styled video title -->
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}
