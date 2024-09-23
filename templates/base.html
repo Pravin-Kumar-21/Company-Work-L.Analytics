@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Django Course App{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .sidebar {
+            width: 250px;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        .main-content {
+            flex-grow: 1;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <nav class="bg-white shadow-lg p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="/" class="text-2xl font-bold text-gray-800">CourseApp</a>
+        </div>
+    </nav>
+    <main class="flex flex-row mt-4 container mx-auto">
+        <div class="sidebar hidden md:block">
+            <h2 class="text-lg font-bold mb-4">Apply Filter</h2>
+            {% block sidebar %}
+            {% endblock %}
+        </div>
+        <div class="main-content flex flex-row bg-white shadow-md rounded-lg">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </main>
+    <footer class="bg-gray-800 text-white p-4 mt-8">
+        <div class="container mx-auto text-center">
+            <p>© 2024 CourseApp. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
