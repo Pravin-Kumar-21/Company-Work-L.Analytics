@@ -31,8 +31,8 @@ This project is a web application that displays a list of available courses and 
 
 - **Data Source**: 
   - Utilizes `get_course_detail_API_response.json` to fetch video details for the selected course.
-  - [This displays the detail video list of the selected course ](http://127.0.0.1:8000/course/709998/)
-  - http://127.0.0.1:8000/course/709998/ - Course Detail View
+  - [This displays the detail video list of the selected course ](http://127.0.0.1:8000/course/course_id/)
+  - http://127.0.0.1:8000/course/course_id/ - Course Detail View
 - **Functionality**: 
   - Lists all videos associated with the selected course.
   - Users can select a video to play it directly within the application.
