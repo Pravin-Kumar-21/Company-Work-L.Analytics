@@ -1,17 +1,30 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container flex flex-row justify-between mb-4"> 
-    <div class="w-1/2 flex-row items-start border-black"> 
-        <div class="relative w-full h-0  border-2" style="padding-bottom: 56.25%;"> 
+    
+    <div class="w-3/5 flex-col items-start border-black relative"> 
+        <span class="absolute top-2 text-lg left-2 bg-white px-2 py-1 rounded z-10">
+            <strong>Course</strong> / <span class="text-sm">{{ course_id }}</span>
+        </span>
+        <div class="relative w-full mt-16 h-0 border-2" style="padding-bottom: 56.25%;"> 
             <iframe 
+                id="video-player"  
                 class="absolute top-0 left-0 w-full h-full" 
-                src=""
-                title="YouTube video player" 
+                src="{{ embed_urls.0 }}"  
+                title="{{ videos.0.video_title }}" 
                 frameborder="0" 
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                 allowfullscreen>
             </iframe>
         </div>
+
+        
+        <div class="mt-4 p-2">
+            <h2 id="video-title" class="text-xl font-bold">{{ videos.0.video_title }}</h2>
+            <h5 id="dop">{{ videos.0.date_of_publish }}</h5>
+        </div>
+
+        
         <div class="container mt-4 w-full">
             <div class="w-full border-2 border-gray-500 p-2"> 
                 <textarea class="w-full h-32 p-2 border-2 border-gray-300 rounded" placeholder="Type your notes here..."></textarea> 
@@ -19,12 +32,55 @@
         </div>
     </div>
 
-    <div class="w-1/4 flex flex-col items-end"> 
+    
+    <div class="w-1/4 flex flex-col items-end border"> 
         {% for video in videos %}
-            <div class="mb-4 w-full text-right cursor-pointer border-2"> <!-- Full width, right-aligned text, clickable -->
-                <h2 class="text-blue-500 hover:underline">{{ video.video_title }}</h2> <!-- Styled video title -->
+            <div class="mb-1 py-2 w-full text-center cursor-pointer border-2 video-item" 
+                data-index="{{ forloop.counter0 }}">
+                <h2 class="text-blue-500 hover:underline video-title">#Video {{ forloop.counter }}</h2>
             </div>
         {% endfor %}
     </div>
 </div>
+
+
+<style>
+    .active-video {
+        background-color: #E5E7EB; 
+        position: relative;
+    }
+
+    .active-video::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 5px;
+        height: 100%; 
+        background-color: yellow;
+    }
+</style>
+
+
+<script>
+    const videoItems = document.querySelectorAll('.video-item');
+    const videoPlayer = document.getElementById('video-player');
+    const videoTitleDisplay = document.getElementById('video-title');
+    const dop = document.getElementById('dop');
+    const embedUrls = {{ embed_urls|safe }};  
+
+    videoItems.forEach(item => {
+        item.addEventListener('click', () => {
+            const index = item.getAttribute('data-index');  
+            const selectedVideo = embedUrls[index];  
+            const videoTitle = item.querySelector('.video-title').textContent;
+            const date = item.getAttribute('data-date-of-publish');
+            videoPlayer.src = selectedVideo;
+            videoTitleDisplay.textContent = videoTitle;
+            dop.textContent = date;
+            videoItems.forEach(i => i.classList.remove('active-video'));
+            item.classList.add('active-video');
+        });
+    });
+</script>
 {% endblock content %}
