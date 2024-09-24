@@ -1,0 +1,12 @@
+<form method="GET" action="{% url 'course:course_list' %}">
+    <div class="w-full mb-4 flex justify-center">
+        <input
+            type="text"
+            id="search-bar"
+            name="search"
+            placeholder="Search videos..."
+            class="w-3/5 p-2 border border-gray-300 rounded"
+        />
+        <button type="submit" class="ml-2 bg-blue-500 text-white px-4 py-2 rounded">Search</button>
+    </div>
+</form>
