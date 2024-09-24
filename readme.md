@@ -22,6 +22,7 @@ This project is a web application that displays a list of available courses and 
 - **Data Source**: 
   - Utilizes `get_all_courses_API_response.json` to retrieve the course list.
   - [This displays the list of courses ](http://127.0.0.1:8000/course/)
+  - http://127.0.0.1:8000/course/ - Course list View
 - **Functionality**: 
   - Displays all available courses along with applicable filters and course search functionality.
   - Redirects to the Course Detail page when a course is selected.
@@ -31,6 +32,7 @@ This project is a web application that displays a list of available courses and 
 - **Data Source**: 
   - Utilizes `get_course_detail_API_response.json` to fetch video details for the selected course.
   - [This displays the detail video list of the selected course ](http://127.0.0.1:8000/course/709998/)
+  - http://127.0.0.1:8000/course/709998/ - Course Detail View
 - **Functionality**: 
   - Lists all videos associated with the selected course.
   - Users can select a video to play it directly within the application.
@@ -43,9 +45,9 @@ To install and set up the Course Application, follow these steps:
    Use the following command to clone the project repository to your local machine:
    ```bash
         git clone <repository-url>
-
+ 
         cd <project-directory>
-
+ 
         python -m venv venv
 
         # On Windows
@@ -63,6 +65,29 @@ To install and set up the Course Application, follow these steps:
 
 
 ##  Website Preview
+
+### Course List Page
+![Preview of the Course List Page](https://github.com/Pravin-Kumar-21/Freelance-Work-L.Analytics/blob/progress-1/live%20Pictures/1.png)
+![Preview of the Course List Page](https://github.com/Pravin-Kumar-21/Freelance-Work-L.Analytics/blob/progress-1/live%20Pictures/2.png)
+![Preview of the Course List Page](https://github.com/Pravin-Kumar-21/Freelance-Work-L.Analytics/blob/progress-1/live%20Pictures/3.png)
+
+
+### Course Detail Page
+![Preview of the Course Detail Page](https://github.com/Pravin-Kumar-21/Freelance-Work-L.Analytics/blob/progress-1/live%20Pictures/4.png)
+![Preview of the Course Detail Page](https://github.com/Pravin-Kumar-21/Freelance-Work-L.Analytics/blob/progress-1/live%20Pictures/5.png)
+
+
+### Filter
+![Preview of the Filter Applied](https://github.com/Pravin-Kumar-21/Freelance-Work-L.Analytics/blob/progress-1/live%20Pictures/filter.png)
+
+
+### Search Bar Feild
+![Preview of the Filter Applied](https://github.com/Pravin-Kumar-21/Freelance-Work-L.Analytics/blob/progress-1/live%20Pictures/search.png)
+
+
+
+
+
 
 
 
