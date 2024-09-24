@@ -1,7 +1,55 @@
 {% block sidebar %}
-<div class="sidebar hidden sm:block rounded-md">
+<div class="sidebar hidden sm:block rounded-md p-4 border">
     <div>
         <h2 class="text-lg font-bold mb-4">Apply Filter</h2>
+        
+        <form method="GET" action="{% url 'course:course_list' %}">
+            <h3 class="font-semibold">Language</h3>
+            <div>
+                {% for language in facets.course_language %}
+                    <label>
+                        <input type="checkbox" name="language" value="{{ language.key }}">
+                        {{ language.key }} ({{ language.doc_count }})
+                    </label>
+                    <br>
+                {% endfor %}
+            </div>
+
+            <h3 class="font-semibold mt-4">Duration</h3>
+            <div>
+                {% for duration in facets.course_duration %}
+                    <label>
+                        <input type="checkbox" name="duration" value="{{ duration.key }}">
+                        {{ duration.key }} ({{ duration.doc_count }})
+                    </label>
+                    <br>
+                {% endfor %}
+            </div>
+
+            <h3 class="font-semibold mt-4">Subject</h3>
+            <div>
+                {% for subject in facets.course_subject %}
+                    <label>
+                        <input type="checkbox" name="subject" value="{{ subject.key }}">
+                        {{ subject.key }} ({{ subject.doc_count }})
+                    </label>
+                    <br>
+                {% endfor %}
+            </div>
+
+            <h3 class="font-semibold mt-4">Topic</h3>
+            <div>
+                {% for topic in facets.course_topic %}
+                    <label>
+                        <input type="checkbox" name="topic" value="{{ topic.key }}">
+                        {{ topic.key }} ({{ topic.doc_count }})
+                    </label>
+                    <br>
+                {% endfor %}
+            </div>
+            
+            <button type="submit" class="mt-4 bg-blue-500 text-white p-2 rounded">Apply Filters</button>
+        </form>
     </div>
-    {% endblock %}
 </div>
+{% endblock %}

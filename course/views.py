@@ -8,17 +8,57 @@ import re
 def course_list(request, *args, **kwargs):
     base_dir = settings.BASE_DIR
     file_path = os.path.join(base_dir, "api", "get_all_courses_API_response.json")
+
     try:
         with open(file_path, "r") as file:
             data = json.load(file)
+            facets = data.get("facets", {})
             courses = data.get("courses", [])
     except (FileNotFoundError, json.JSONDecodeError):
         courses = []
+        facets = {}
+
+    selected_language = request.GET.get("language", "")
+    selected_duration = request.GET.get("duration", "")
+    selected_subject = request.GET.get("subject", "")
+    selected_topic = request.GET.get("topic", "")
+    search_query = request.GET.get("search", "").lower()
+
+    if selected_language:
+        courses = [
+            course
+            for course in courses
+            if course.get("course_language").lower() == selected_language.lower()
+        ]
+    if selected_duration:
+        courses = [
+            course
+            for course in courses
+            if course.get("course_duration").lower() == selected_duration.lower()
+        ]
+    if selected_subject:
+        courses = [
+            course
+            for course in courses
+            if course.get("course_subject").lower() == selected_subject.lower()
+        ]
+    if selected_topic:
+        courses = [
+            course
+            for course in courses
+            if course.get("course_topic").lower() == selected_topic.lower()
+        ]
+    if search_query:
+        courses = [
+            course
+            for course in courses
+            if search_query in course.get("course_name", "").lower()
+        ]
 
     return render(
         request,
         "course-list/course-list.html",
-        {"courses": courses},
+        {"courses": courses, "facets": facets},
     )
 
 
