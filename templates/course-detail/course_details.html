@@ -17,22 +17,16 @@
                 allowfullscreen>
             </iframe>
         </div>
-
-        
         <div class="mt-4 p-2">
             <h2 id="video-title" class="text-xl font-bold">{{ videos.0.video_title }}</h2>
             <h5 id="dop">{{ videos.0.date_of_publish }}</h5>
         </div>
-
-        
         <div class="container mt-4 w-full">
             <div class="w-full border-2 border-gray-500 p-2"> 
                 <textarea class="w-full h-32 p-2 border-2 border-gray-300 rounded" placeholder="Type your notes here..."></textarea> 
             </div>
         </div>
     </div>
-
-    
     <div class="w-1/4 flex flex-col items-end border"> 
         {% for video in videos %}
             <div class="mb-1 py-2 w-full text-center cursor-pointer border-2 video-item "data-video-title="{{video.video_title}}" 
@@ -42,8 +36,6 @@
         {% endfor %}
     </div>
 </div>
-
-
 <style>
     .active-video {
         background-color: #E5E7EB; 
@@ -60,8 +52,6 @@
         background-color: yellow;
     }
 </style>
-
-
 <script>
     const videoItems = document.querySelectorAll('.video-item');
     const videoPlayer = document.getElementById('video-player');

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container w-2/6 mx-auto my-10 flex flex-col items-center border p-6 border-gray-400">
+    <form method = "POST" action="{% url "signup" %}">
+        {% csrf_token %}
+    <input type="text" name="first_name" class="w-full mb-2 border border-gray-200 rounded-md py-5 font-light text-lg text-left px-5 border-solid focus:outline-none focus:border-gray-600" placeholder="First Name">
+    <input type="text" name="last_name" class="w-full mb-2 border border-gray-200 rounded-md py-5 font-light text-lg text-left px-5 border-solid focus:outline-none focus:border-gray-600" placeholder="Last Name">
+    <input type="email" name="email" class="w-full mb-2 border border-gray-200 rounded-md py-5 font-light text-lg text-left px-5 border-solid focus:outline-none focus:border-gray-600" placeholder="Email">
+    <input type="password" name="password" class="w-full mb-2 border border-gray-200 rounded-md py-5 font-light text-lg text-left px-5 border-solid focus:outline-none focus:border-gray-600" placeholder="Password">
+    <input type="password" name="password1" class="w-full mb-2 border border-gray-200 rounded-md py-5 font-light text-lg text-left px-5 border-solid focus:outline-none focus:border-gray-600" placeholder="Confirm Password">           
+    <button class="w-full text-center rounded-sm py-5 mt-12 font-light text-lg bg-gray-400 text-white hover:bg-gray-700">SignUp</button>
+    </form>
+    <div class="mt-4 font-extralight">
+        <span> Have an account? </span>
+        <a href="{% url 'login' %}" class="text-blue-600 font-normal hover:text-blue-900">&nbsp;&nbsp;Login </a>
+    </div>
+    </div>
+{% endblock content %}

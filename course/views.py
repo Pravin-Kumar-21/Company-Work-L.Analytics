@@ -1,8 +1,14 @@
 import json
 import os
 from django.conf import settings
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse_lazy, reverse
+from . import forms, models, mixins
+from django.views.generic import FormView
 import re
+from django.views.generic import FormView, DetailView, UpdateView
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 
 def course_list(request, *args, **kwargs):
@@ -54,7 +60,7 @@ def course_list(request, *args, **kwargs):
             for course in courses
             if search_query in course.get("course_name", "").lower()
         ]
-
+    print(request.user.is_authenticated)
     return render(
         request,
         "course-list/course-list.html",
@@ -77,6 +83,7 @@ def generate_embed_urls(youtube_urls):
     return embed_urls
 
 
+@login_required
 def course_detail_list(request, *args, **kwargs):
     videos = []
     yt_urls = []

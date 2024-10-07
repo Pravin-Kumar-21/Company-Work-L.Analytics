@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container w-2/6 mx-auto flex flex-col items-center border-2 rounded-sm mb-10 p-6 border-gray-300">
+        
+        <form method = "POST" action="{% url "login" %}" class="w-full">
+                {% csrf_token %}
+            <input type="email" name="email" class="w-full mb-2 border border-gray-200 rounded-sm py-5 font-light text-lg text-left px-5 border-solid focus:outline-none focus:border-gray-600" placeholder="Email Addresss" >
+            <input type="password" name="password" class="w-full mb-2 border border-gray-200 rounded-sm py-5 font-light text-lg text-left px-5 border-solid focus:outline-none focus:border-gray-600" placeholder="Password">
+            <button class="w-full bg-gray-400 text-center rounded-sm mt-20 mb-4 py-3 font-light text-lg hover:bg-gray-700">Login</button>
+        </form>
+        <div class="mt-4 font-extralight">
+            <span>Don't have an account? </span>
+            <a href="{% url 'signup' %}" class="text-gray-400 font-normal hover:text-gray-700">&nbsp;&nbsp;SignUp </a>
+        </div>
+    </div>
+{% endblock content %}
