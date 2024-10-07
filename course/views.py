@@ -1,8 +1,64 @@
+from django.conf import settings
+from django.shortcuts import render, redirect
+from django.urls import reverse_lazy, reverse
+from django.views.generic import FormView, DetailView, UpdateView
+from django.views import View
+from . import forms, models
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+import os
+import requests
+from django.contrib import messages
+import json
+from django.contrib.messages.views import SuccessMessageMixin
+from . import mixins
 import json
 import os
-from django.conf import settings
-from django.shortcuts import render
 import re
+
+
+# Login Class
+class LoginView(mixins.LoggedOutOnlyView, FormView):
+    template_name = "users/login.html"
+    form_class = forms.LoginForm
+    success_url = reverse_lazy("course:course_list")
+
+    def form_valid(self, form):
+        email = form.cleaned_data.get("email")
+        password = form.cleaned_data.get("password")
+        user = authenticate(self.request, username=email, password=password)
+        if user is not None:
+            login(self.request, user)
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        next_arg = self.request.GET.get("next")
+        if next_arg is not None:
+            return next_arg
+        else:
+            return reverse("course:course_list")
+
+
+# Logout
+def log_out(request):
+    logout(request)
+    return redirect(reverse("home"))
+
+
+# User Signup
+class SignUpView(FormView):
+    template_name = "users/signup.html"
+    form_class = forms.SignUpForm
+    success_url = reverse_lazy("course:course_list")
+
+    def form_valid(self, form):
+        form.save()
+        email = form.cleaned_data.get("email")
+        password = form.cleaned_data.get("password")
+        user = authenticate(self.request, username=email, password=password)
+        if user is not None:
+            login(self.request, user)
+        return super().form_valid(form)
 
 
 def course_list(request, *args, **kwargs):
@@ -77,6 +133,7 @@ def generate_embed_urls(youtube_urls):
     return embed_urls
 
 
+@login_required
 def course_detail_list(request, *args, **kwargs):
     videos = []
     yt_urls = []

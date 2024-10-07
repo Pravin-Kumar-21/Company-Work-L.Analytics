@@ -18,10 +18,22 @@
     </style>
 </head>
 <body class="bg-gray-50">
-    <nav class="bg-white shadow-lg p-4">
-        <div class="container mx-auto flex ">
-            <a href="{% url 'course:course_list' %}" class="text-2xl font-bold text-gray-800">CourseApp</a>
+    <nav class="bg-white shadow-lg p-2">
+       <div class="container mx-auto flex justify-between items-center">
+        <a href="{% url 'course:course_list' %}" class="text-2xl font-bold">CourseApp</a>
+        <div class="flex space-x-10">
+            {% if user.is_authenticated %}
+            <p>{{user.is_authenticated }}</p>
+            <a href="#" class="hover:text-gray-600">Your Profile</a>
+            <a href="#" class="hover:text-gray-600">Your Courses</a>
+            <a href="{% url 'logout' %}" class="hover:text-gray-600">Logout</a>  
+            {% else %}
+            <p>{{user.is_authenticated }}</p>
+                <a href="{% url 'login' %}" class="hover:text-gray-600">Login</a>
+                <a href="{% url 'SignUp' %}" class="hover:text-gray-600">SignUp</a>
+            {% endif %}
         </div>
+    </div>
     </nav>
     <main class=" mt-4 container mx-auto">
         <div class="main-content bg-white shadow-md rounded-lg">
