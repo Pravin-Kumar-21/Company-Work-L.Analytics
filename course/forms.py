@@ -1,6 +1,7 @@
 from typing import Any
 from django import forms
 from . import models
+from django import forms
 
 
 class LoginForm(forms.Form):
@@ -45,3 +46,14 @@ class SignUpForm(forms.ModelForm):
         user.username = email
         user.set_password(password)
         user.save()
+
+
+class CourseNoteForm(forms.ModelForm):
+    class Meta:
+        model = models.CourseNote
+        fields = ["note"]
+        widgets = {
+            "note": forms.Textarea(
+                attrs={"rows": 4, "cols": 40, "placeholder": "Write your notes here..."}
+            )
+        }

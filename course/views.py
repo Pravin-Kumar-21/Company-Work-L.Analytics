@@ -1,8 +1,8 @@
 from django.conf import settings
+from django.shortcuts import render, get_object_or_404
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
-from django.views.generic import FormView, DetailView, UpdateView
-from django.views import View
+from django.views.generic import FormView
 from . import forms, models
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -17,7 +17,6 @@ import os
 import re
 
 
-# Login Class
 class LoginView(mixins.LoggedOutOnlyView, FormView):
     template_name = "users/login.html"
     form_class = forms.LoginForm
@@ -39,13 +38,11 @@ class LoginView(mixins.LoggedOutOnlyView, FormView):
             return reverse("course:course_list")
 
 
-# Logout
 def log_out(request):
     logout(request)
     return redirect(reverse("home"))
 
 
-# User Signup
 class SignUpView(FormView):
     template_name = "users/signup.html"
     form_class = forms.SignUpForm
@@ -59,6 +56,66 @@ class SignUpView(FormView):
         if user is not None:
             login(self.request, user)
         return super().form_valid(form)
+
+
+@login_required
+def enroll_course(request, course_id):
+
+    file_path = os.path.join(
+        settings.BASE_DIR, "api", "get_all_courses_API_response.json"
+    )
+    with open(file_path, "r") as file:
+        courses_data = json.load(file)
+    course_data = None
+    for course in courses_data["courses"]:
+        if course["course_id"] == course_id:
+            course_data = course
+            break
+
+    if not course_data:
+        return render(request, "error.html", {"message": "Course not found."})
+    enrolled_course, created = models.EnrolledCourse.objects.get_or_create(
+        course_id=course_data["course_id"],
+        defaults={
+            "course_name": course_data["course_name"],
+            "course_subject": course_data["course_subject"],
+        },
+    )
+    user = request.user
+    if isinstance(user, models.EnrolledCourse):
+        enrolled_course.user_enrolled.add(user)
+    return redirect("course:course_detail", course_id=course_id)
+
+
+def save_note(request, course_id, video_id):
+    course_id = course_id
+    print(course_id)
+    video_id = course_id
+
+    if request.method == "POST":
+        note_content = request.POST.get("note")
+
+        if note_content:
+
+            note, created = models.CourseNote.objects.get_or_create(
+                member=request.user,
+                video_id=video_id,
+                course_id=course_id,
+                defaults={"note": note_content},  # Default value if creating new
+            )
+            if not created:
+                note.note += f"\n{note_content}"
+            note.save()
+            return redirect("course:course_detail", course_id=course_id)
+
+    return render(
+        request,
+        "course-detail/course_details.html",
+        {
+            "video_id": video_id,
+            "course_id": course_id,
+        },
+    )
 
 
 def course_list(request, *args, **kwargs):

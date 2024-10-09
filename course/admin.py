@@ -26,3 +26,22 @@ class UserAdminPanel(UserAdmin):
         "last_name",
         "email",
     )
+
+
+@admin.register(models.EnrolledCourse)
+class EnrolledPanel(admin.ModelAdmin):
+    list_display = (
+        "course_name",
+        "course_id",
+        "course_subject",
+    )
+
+
+@admin.register(models.CourseNote)
+class CourseNotePanel(admin.ModelAdmin):
+    list_display = (
+        "course_id",
+        "note",
+        "created_at",
+        "updated_at",
+    )
